@@ -1,3 +1,4 @@
+
 /*
  * Use HID-Project
  */
@@ -10,7 +11,12 @@ void setup() {
   int csec = 40;
   int i, n = 5;
 
-  csec = EEPROM.read(ADDR);
+  i = EEPROM.read(ADDR);
+  if(i>0){
+    csec = i;
+  }else{
+    EEPROM.write(ADDR, csec);
+  }
 
   Keyboard.begin();
 
@@ -32,9 +38,9 @@ void loop() {
     if(csec > 0){
       EEPROM.write(ADDR, csec);
       csec = EEPROM.read(ADDR);
-      Serial.print("Set delay：");
-      Serial.println(csec);
     }
+    Serial.print("Set delay:");
+    Serial.println(csec);
   }
   delay(3000);
 }
